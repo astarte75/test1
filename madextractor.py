@@ -51,17 +51,10 @@ def validate_indices(compressed_files, selections):
     return indices
 
 
-def get_destination():
-    """Prompts for destination directory."""
+def get_destination(filename):
+    """Returns the destination directory based on the location of the archived file."""
     
-    dest_dir = input("Enter destination directory (leave blank for current directory): ")
-    if not dest_dir:
-        dest_dir = "."
-    
-    if not os.path.isdir(dest_dir):
-        print("Error: Invalid directory")
-        return None
-    
+    dest_dir = os.path.dirname(filename)
     return dest_dir
 
 
@@ -122,7 +115,7 @@ def main():
             print("Invalid indices, please try again.")
             continue
 
-        destination = get_destination()
+        destination = get_destination(compressed_files[indices[0]-1])
         if not destination:
             return
 

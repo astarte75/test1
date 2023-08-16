@@ -10,11 +10,11 @@ def find_compressed_files(include_subfolders=False):
     if include_subfolders:
         for root, dirs, files in os.walk('.'):
             for name in files:
-                if name.endswith((".zip", ".tar.gz", ".rar")):
+                if name.endswith((".zip", ".tar.gz", ".rar")) or is_multipart(name):
                     compressed_files.append(os.path.join(root, name))
     else:
         for name in os.listdir():
-            if name.endswith((".zip", ".tar.gz", ".rar")):
+            if name.endswith((".zip", ".tar.gz", ".rar")) or is_multipart(name):
                 compressed_files.append(name)
 
     return compressed_files

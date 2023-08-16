@@ -2,9 +2,9 @@ import os
 import shutil
 import subprocess
 
-def get_compressed_files(include_subfolders=False):
+def find_compressed_files(include_subfolders=False):
     """Returns a list of compressed files in the current and optionally subfolders."""
-
+    
     compressed_files = []
 
     if include_subfolders:
@@ -35,7 +35,7 @@ def display_compressed_files(compressed_files):
 
 def validate_indices(compressed_files, selections):
     """Validates the selected index numbers."""
-
+    
     indices = []
 
     for selection in selections.split(','):
@@ -53,7 +53,7 @@ def validate_indices(compressed_files, selections):
 
 def get_destination():
     """Prompts for destination directory."""
-
+    
     dest_dir = input("Enter destination directory (leave blank for current directory): ")
     if not dest_dir:
         dest_dir = "."
@@ -67,7 +67,7 @@ def get_destination():
 
 def extract_files(compressed_files, selected_indices, destination_directory):
     """Extracts the selected compressed files to the destination directory."""
-
+    
     if not destination_directory:
         print("Extraction cancelled, no destination provided.")
         return False
@@ -94,16 +94,18 @@ def extract_files(compressed_files, selected_indices, destination_directory):
 
 
 def main():
-
+    """Main entry point of the program."""
+    
     include_subfolders = input("Include subfolders? (y/n): ")
     if include_subfolders.lower().startswith('y'):
-        compressed_files = get_compressed_files(include_subfolders=True) 
+        compressed_files = find_compressed_files(include_subfolders=True) 
     else:
-        compressed_files = get_compressed_files()
+        compressed_files = find_compressed_files()
 
     if not compressed_files:
         print("No compressed files found.")
         return
+    
     while True:
         display_compressed_files(compressed_files)
         selections = input("Enter file indices to extract (comma-separated), or type x to exit: ")

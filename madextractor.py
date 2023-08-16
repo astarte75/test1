@@ -26,11 +26,21 @@ def display_compressed_files(compressed_files):
     print("Found {} compressed files:".format(len(compressed_files)))
 
     for idx, filename in enumerate(compressed_files, start=1):
-        print("{}. {}".format(idx, filename))
+        if is_multipart(filename):
+            print("{}. {} *".format(idx, filename))
+        else:
+            print("{}. {}".format(idx, filename))
         if idx % 10 == 0:
             choice = input("Press x to exit, any other key to continue: ")
             if choice.lower() == 'x':
                 return
+
+
+def is_multipart(filename):
+    """Checks if the given filename is a multipart archive file."""
+    
+    basename = os.path.basename(filename)
+    return basename.endswith((".part1.rar", ".r01", ".zip1", ".tar.gz1"))
 
 
 def validate_indices(compressed_files, selections):
